@@ -43,13 +43,13 @@ class Main:
     def main_screen(self, width, height):
         'self.root.configure(bg="#8a2f61")'
         
-        bg_image = Image.open("background.jpg")
+        bg_image = Image.open("Images\\background.jpg")
         bg_image = bg_image.resize((width, height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_label = tk.Label(self.root, image=self.bg_photo)
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
         
-        self.image = Image.open("speaker_icon1.png")
+        self.image = Image.open("Images\\speaker_icon1.png")
         self.res_image = self.image.resize((30, 30), Image.LANCZOS)
         self.photo = ImageTk.PhotoImage(self.res_image)
         
@@ -83,7 +83,7 @@ class Main:
         self.about_text = tk.Label(self.root, text=self.aboutText, font=("Helventica", 20),bg="#8a2f61", fg="white")
         self.about_text.place(relx=0.50, rely=0.40, anchor=tk.CENTER)
         
-        self.speak_button = tk.Button(self.root, image=self.photo, command=lambda: self.speak(self.aboutText))
+        self.speak_button = tk.Button(self.root, image=self.photo, command=lambda: self.speak(f"Healthy Vision Tips... {self.aboutText}"))
         self.speak_button.place(relx=0.50, rely=0.55, anchor=tk.CENTER)
         
     def load_screen(self):
@@ -92,7 +92,7 @@ class Main:
                 widget.destroy()
             
         services_app = services.Services(self.root)
-        test.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        services.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
 
 
 if __name__ == "__main__":

@@ -157,7 +157,7 @@ Test'''
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
-        header_image = Image.open("background-gradient-lights (10).jpg")
+        header_image = Image.open("Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
         header_image = header_image.resize((width, 150), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
@@ -185,7 +185,7 @@ Test'''
         self.main_frame = tk.Frame(self.root)
         self.main_frame.place(x=0, y=150, width=width, height=height-header_image_height)  # Adjusted to start right below the header
 
-        self.bg_image = Image.open("background_footer.jpg")
+        self.bg_image = Image.open("Images\\background_footer.jpg")
         self.bg_image = self.bg_image.resize((width, height-header_image_height), Image.LANCZOS)  # Height adjusted as needed
         self.bg_photo = ImageTk.PhotoImage(self.bg_image)
         
@@ -214,7 +214,7 @@ Test'''
         self.service1_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service1_Button.place(relx=0.25, y=350, anchor=tk.CENTER)
         
-        snellen_chart = Image.open("snellen_chart.jpg")
+        snellen_chart = Image.open("Images\\snellen_chart.jpg")
         snellen_chart = snellen_chart.resize((200, 350), Image.LANCZOS)
         self.snellen_chart = ImageTk.PhotoImage(snellen_chart)
         
@@ -231,7 +231,7 @@ Test'''
         self.service2_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service2_Button.place(relx=0.25, y=1000, anchor=tk.CENTER)
         
-        ishira_image = Image.open("ishihara_image.png")
+        ishira_image = Image.open("Images\\ishihara_image.png")
         ishira_image = ishira_image.resize((320, 320), Image.LANCZOS)
         self.ishira_image = ImageTk.PhotoImage(ishira_image)
         
@@ -248,7 +248,7 @@ Test'''
         self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
         
-        color_blindness_image = Image.open("color_blindness_image.jpg")
+        color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
         color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
         self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
         

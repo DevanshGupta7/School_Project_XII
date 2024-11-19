@@ -3,6 +3,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import threading
 
+import main
+
 class Services:
     def __init__(self, root):
         self.root = root
@@ -39,6 +41,7 @@ Test'''
         self.services_button.config(activebackground="#FFFFFE", activeforeground="#8a2f61")
         self.about_button.config(activebackground="#FFFFFE", activeforeground="#8a2f61")
         self.faq_button.config(activebackground="#FFFFFE", activeforeground="#8a2f61")
+        self.home_button.config(activebackground="#FFFFFE", activeforeground="#8a2f61")
         self.service1_frame.config(activebackground="#22215b", activeforeground="white")
         self.service2_frame.config(activebackground="#22215b", activeforeground="white")
         self.service3_frame.config(activebackground="#22215b", activeforeground="white")
@@ -50,6 +53,7 @@ Test'''
         self.services_button.config(activebackground="#8a2f61", activeforeground="black")
         self.about_button.config(activebackground="#8a2f61", activeforeground="black")
         self.faq_button.config(activebackground="#8a2f61", activeforeground="black")
+        self.home_button.config(activebackground="#8a2f61", activeforeground="black")
         self.service1_frame.config(activebackground="#22215b", activeforeground="white")
         self.service2_frame.config(activebackground="#22215b", activeforeground="white")
         self.service3_frame.config(activebackground="#22215b", activeforeground="white")
@@ -61,7 +65,7 @@ Test'''
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
-        header_image = Image.open("background-gradient-lights (10).jpg")
+        header_image = Image.open("Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
         print(header_image_height)
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
@@ -87,6 +91,11 @@ Test'''
         self.faq_button.bind("<ButtonRelease-1>", self.on_release)
         self.faq_button.place(relx=0.63, rely=0.50, anchor=tk.CENTER)
         
+        self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen())
+        self.home_button.bind("<Button-1>", self.on_press)
+        self.home_button.bind("<ButtonRelease-1>", self.on_release)
+        self.home_button.place(relx=0.9, rely=0.50, anchor=tk.CENTER)
+        
         self.main_frame = tk.Frame(self.root)
         self.main_frame.place(x=0, y=header_image_height, width=width, height=height-header_image_height)
         
@@ -97,11 +106,12 @@ Test'''
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
         
         self.inner_frame = tk.Frame(self.canvas)
         
-        bg_image = Image.open("background_footer.jpg")
+        bg_image = Image.open("Images\\background_footer.jpg")
         bg_image = bg_image.resize((width, height-header_image_height+1650), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_photo_label = tk.Label(self.inner_frame, image=self.bg_photo, bd=0, highlightthickness=0)
@@ -117,7 +127,7 @@ Test'''
         self.service1_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service1_Button.place(relx=0.25, y=350, anchor=tk.CENTER)
         
-        snellen_chart = Image.open("snellen_chart.jpg")
+        snellen_chart = Image.open("Images\\snellen_chart.jpg")
         snellen_chart = snellen_chart.resize((200, 350), Image.LANCZOS)
         self.snellen_chart = ImageTk.PhotoImage(snellen_chart)
         
@@ -134,7 +144,7 @@ Test'''
         self.service2_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service2_Button.place(relx=0.25, y=1000, anchor=tk.CENTER)
         
-        ishira_image = Image.open("ishihara_image.png")
+        ishira_image = Image.open("Images\\ishihara_image.png")
         ishira_image = ishira_image.resize((320, 320), Image.LANCZOS)
         self.ishira_image = ImageTk.PhotoImage(ishira_image)
         
@@ -151,7 +161,7 @@ Test'''
         self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
         
-        color_blindness_image = Image.open("color_blindness_image.jpg")
+        color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
         color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
         self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
         
@@ -161,6 +171,13 @@ Test'''
         self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
         self.inner_frame.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        
+    def load_screen(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        main.Main(self.root).main_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         
 
 
