@@ -103,15 +103,15 @@ Test'''
         self.letter = self.canvas.create_text(width/2, height/2-200, text=self.text1, font=("Arial", self.current_size), fill="black")
         
         self.input_text = tk.Entry(self.canvas)
-        self.input_text.place(relx=0.465, rely=0.6)
+        self.input_text.place(relx=0.5, rely=0.55, anchor=tk.CENTER)
         
         self.failed_attempts = 3
         
         self.next_button = tk.Button(self.canvas, text="Next Level", command=lambda: self.check(width, height))
-        self.next_button.pack()
+        self.next_button.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
         
         self.status_label = tk.Label(self.canvas, text="")
-        self.status_label.pack()
+        self.status_label.place(relx=0.5, rely=0.70, anchor=tk.CENTER)
         
         self.start_time = time.time()
         
@@ -131,7 +131,7 @@ Test'''
             self.input_text.delete(0, tk.END)
             if self.failed_attempts == 0:
                 self.status_label.config(text="Test Failed!")
-                self.display_report(width, height)
+                self.root.after(2000, lambda: self.display_report(width, height))
                 
     def next_level(self, width, height):
         self.end_time = time.time()
@@ -147,7 +147,7 @@ Test'''
             self.start_time = time.time()
         else:
             self.status_label.config(text="Test Completed!")
-            self.display_report(width, height)
+            self.root.after(2000, lambda: self.display_report(width, height))
             
     def display_report(self, width, height):
         self.clear_previous_widgets()
@@ -178,11 +178,11 @@ Test'''
             
         self.report = self.canvas.create_text(width/2, height/2-200, text=self.report_content, font=("Arial", 20), fill="black")
         
-        self.plot_progression(self.level)
+        #self.plot_progression(self.level)
 
         # Close Button
-        self.close_button = tk.Button(self.canvas, text="Close")
-        self.close_button.pack(pady=10)
+        self.close_button = tk.Button(self.canvas, text="Close", command= lambda: self.load_screen_services())
+        self.close_button.place(relx=0.5, rely=0.6)
         
     def plot_progression(self, levels):
         self.sizes = self.letter_sizes[:levels]

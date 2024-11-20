@@ -115,7 +115,7 @@ Test'''
         self.bg_photo_label = tk.Label(self.inner_frame, image=self.bg_photo, bd=0, highlightthickness=0)
         self.bg_photo_label.pack()
         
-        self.service1_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
+        self.service1_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0, command=lambda: self.load_screen_service1())
         self.service1_frame.bind("<Button-1>", self.on_press)
         self.service1_frame.bind("<ButtonRelease-1>", self.on_release)
         self.service1_frame.place(relx=0.50, y=350, anchor=tk.CENTER)
@@ -129,7 +129,7 @@ Test'''
         snellen_chart = snellen_chart.resize((200, 350), Image.LANCZOS)
         self.snellen_chart = ImageTk.PhotoImage(snellen_chart)
         
-        self.service1_image = tk.Button(self.inner_frame, image=self.snellen_chart, bd=0)
+        self.service1_image = tk.Button(self.inner_frame, image=self.snellen_chart, bd=0, command=lambda: self.load_screen_service1())
         self.service1_image.place(relx=0.75, y=350, anchor=tk.CENTER)
         
         self.service2_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
