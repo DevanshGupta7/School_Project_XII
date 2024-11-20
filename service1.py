@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 import threading
 import random
 import string
+import matplotlib.pyplot as plt
+import time
 
 import main_screen
 import services
@@ -95,6 +97,7 @@ Test'''
         self.vision_acuity = ["20/200", "20/100", "20/80", "20/60", "20/40", "20/20", "20/15", "20/10", "20/8", "20/7"]
         self.level = 0
         self.current_size = self.letter_sizes[self.level]
+        self.levels_time = []
         
         self.text1 = self.random_letter()
         self.letter = self.canvas.create_text(width/2, height/2-200, text=self.text1, font=("Arial", self.current_size), fill="black")
@@ -109,6 +112,8 @@ Test'''
         
         self.status_label = tk.Label(self.canvas, text="")
         self.status_label.pack()
+        
+        self.start_time = time.time()
         
     def random_letter(self):
         random_letter = random.choice(string.ascii_uppercase)
@@ -129,12 +134,17 @@ Test'''
                 self.display_report(width, height)
                 
     def next_level(self, width, height):
+        self.end_time = time.time()
+        self.each_level_time = self.end_time - self.start_time
+        self.levels_time.append(self.each_level_time)
+        
         if self.level < len(self.letter_sizes):
             self.failed_attempts = 3
             current_size = self.letter_sizes[self.level]
             self.level += 1
             self.text1 = self.random_letter()
             self.canvas.itemconfig(self.letter, font=("Arial", current_size), text=self.text1)
+            self.start_time = time.time()
         else:
             self.status_label.config(text="Test Completed!")
             self.display_report(width, height)
@@ -149,6 +159,7 @@ Test'''
             Best Level Achieved: Level {self.level}
             Smallest Letter Size: {self.letter_sizes[self.level-1]} pixels
             Estimated Visual Acuity: {self.vision_acuity[self.level-1]}
+            Avg Time Taken per Level: {round(sum(self.levels_time)/len(self.levels_time), 2)} s
             ---------------------
             Recommendations:
             {"Your vision seems normal." if self.level >= len(self.letter_sizes) - 1 else "Consider consulting an optometrist."}
@@ -166,10 +177,21 @@ Test'''
             """
             
         self.report = self.canvas.create_text(width/2, height/2-200, text=self.report_content, font=("Arial", 20), fill="black")
+        
+        self.plot_progression(self.level)
 
         # Close Button
         self.close_button = tk.Button(self.canvas, text="Close")
         self.close_button.pack(pady=10)
+        
+    def plot_progression(self, levels):
+        self.sizes = self.letter_sizes[:levels]
+        plt.plot(range(1, levels + 1), self.sizes, marker='o')
+        plt.gca().invert_yaxis()  # Invert to show smaller letters as better performance
+        plt.title("Eye Test Progression")
+        plt.xlabel("Level")
+        plt.ylabel("Letter Size (Pixels)")
+        plt.show()
     
     def clear_previous_widgets(self):
         # Remove the letter text
