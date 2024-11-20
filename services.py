@@ -3,7 +3,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import threading
 
-import main
+import main_screen
+import service1
 
 class Services:
     def __init__(self, root):
@@ -29,9 +30,6 @@ test'''
         self.service3_text = '''Color
 Blindness
 Test'''
-        
-        self.services_screen(width, height)
-        print(width, height)
         
     def speak(self, audio):
         self.engine.say(audio)
@@ -91,7 +89,7 @@ Test'''
         self.faq_button.bind("<ButtonRelease-1>", self.on_release)
         self.faq_button.place(relx=0.63, rely=0.50, anchor=tk.CENTER)
         
-        self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen())
+        self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_main())
         self.home_button.bind("<Button-1>", self.on_press)
         self.home_button.bind("<ButtonRelease-1>", self.on_release)
         self.home_button.place(relx=0.9, rely=0.50, anchor=tk.CENTER)
@@ -122,7 +120,7 @@ Test'''
         self.service1_frame.bind("<ButtonRelease-1>", self.on_release)
         self.service1_frame.place(relx=0.50, y=350, anchor=tk.CENTER)
         
-        self.service1_Button = tk.Button(self.inner_frame, text=self.service1_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
+        self.service1_Button = tk.Button(self.inner_frame, text=self.service1_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0, command=lambda: self.load_screen_service1())
         self.service1_Button.bind("<Button-1>", self.on_press)
         self.service1_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service1_Button.place(relx=0.25, y=350, anchor=tk.CENTER)
@@ -172,16 +170,17 @@ Test'''
         self.inner_frame.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         
-    def load_screen(self):
+    def load_screen_main(self):
         for widget in self.root.winfo_children():
             if widget.winfo_exists():
                 widget.destroy()
             
-        main.Main(self.root).main_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        main_screen.Main(self.root).main_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Services(root)
-    root.mainloop()
+    def load_screen_service1(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        service1.Service1(self.root).service1_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        

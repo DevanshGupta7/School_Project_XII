@@ -1,46 +1,3 @@
-"""import tkinter as tk
-from PIL import Image, ImageTk
-
-def adjust_chart(size):
-    chart_img = original_chart.resize((size, int(size * chart_ratio)))
-    chart_photo = ImageTk.PhotoImage(chart_img)
-    chart_label.config(image=chart_photo)
-    chart_label.image = chart_photo
-
-def next_level():
-    global current_size
-    if current_size > 100:  # Minimum size threshold
-        current_size -= 50
-        adjust_chart(current_size)
-    else:
-        result_label.config(text="Test Completed!")
-
-# GUI setup
-root = tk.Tk()
-root.title("Snellen Chart Eye Test")
-
-# Load the Snellen chart image
-original_chart = Image.open("Images\\snellen_chart.jpg")  # Replace with your image path
-chart_ratio = original_chart.height / original_chart.width
-current_size = 400  # Initial chart size
-
-chart_img = original_chart.resize((current_size, int(current_size * chart_ratio)))
-chart_photo = ImageTk.PhotoImage(chart_img)
-
-# Chart display
-chart_label = tk.Label(root, image=chart_photo)
-chart_label.pack(pady=20)
-
-# Next button
-next_button = tk.Button(root, text="Next Level", command=next_level)
-next_button.pack()
-
-# Result label
-result_label = tk.Label(root, text="", font=("Arial", 14))
-result_label.pack(pady=10)
-
-root.mainloop()"""
-
 import pyttsx3
 import tkinter as tk
 from PIL import Image, ImageTk
@@ -48,8 +5,10 @@ import threading
 import random
 import string
 
+import main_screen
+import services
 
-class Test2:
+class Service1:
     def __init__(self, root):
         self.root = root
         self.root.title("Eye Testing App")
@@ -62,8 +21,7 @@ class Test2:
         
         width = root.winfo_screenwidth()
         height = root.winfo_screenheight()
-        
-        self.services_screen(width, height)
+
         
         self.service1_text = '''Snellen
 Eye
@@ -84,7 +42,7 @@ Test'''
         speak = threading.Thread(target=run_speak)
         speak.start()
         
-    def services_screen(self, width, height):        
+    def service1_screen(self, width, height):        
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
@@ -99,7 +57,7 @@ Test'''
         self.main_heading = tk.Label(self.header, text="Eye Testing", font=("Helvetica", 35, "italic"),bg="#8a2f61", fg="#FFFF00")
         self.main_heading.place(relx=0.15, rely=0.50, anchor=tk.CENTER)
         
-        self.services_button = tk.Button(self.header, text="Services", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_services_screen(width, height))
+        self.services_button = tk.Button(self.header, text="Services", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_services())
         #self.services_button.bind("<Button-1>", self.on_press_main)
         #self.services_button.bind("<ButtonRelease-1>", self.on_release_main)
         self.services_button.place(relx=0.37, rely=0.50, anchor=tk.CENTER)
@@ -114,7 +72,7 @@ Test'''
         #self.faq_button.bind("<ButtonRelease-1>", self.on_release_main)
         self.faq_button.place(relx=0.63, rely=0.50, anchor=tk.CENTER)
         
-        self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_main_screen(width, height))
+        self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_main())
         #self.home_button.bind("<Button-1>", self.on_press_main)
         #self.home_button.bind("<ButtonRelease-1>", self.on_release_main)
         self.home_button.place(relx=0.9, rely=0.50, anchor=tk.CENTER)
@@ -233,8 +191,18 @@ Test'''
         if hasattr(self, 'status_label') and self.status_label:
             self.status_label.destroy()
             self.status_label = None
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Test2(root)
-    root.mainloop()
+            
+    def load_screen_main(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        main_screen.Main(self.root).main_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_services(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        services.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+            
