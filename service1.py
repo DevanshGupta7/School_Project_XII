@@ -20,21 +20,7 @@ class Service1:
         self.rate = self.engine.getProperty("rate")
         self.engine.setProperty("voice", self.voices[0].id)
         self.engine.setProperty("rate", 150)
-        
-        width = root.winfo_screenwidth()
-        height = root.winfo_screenheight()
 
-        
-        self.service1_text = '''Snellen
-Eye
-Chart'''
-
-        self.service2_text = '''Ishihara
-test'''
-
-        self.service3_text = '''Color
-Blindness
-Test'''
         
     def speak(self, audio):
         def run_speak():
@@ -95,8 +81,8 @@ Test'''
         
         self.letter_sizes = [150, 120, 100, 75, 50, 30, 20, 10, 8, 7]
         self.vision_acuity = ["20/200", "20/100", "20/80", "20/60", "20/40", "20/20", "20/15", "20/10", "20/8", "20/7"]
-        self.level = 0
-        self.current_size = self.letter_sizes[self.level]
+        self.level = 1
+        self.current_size = self.letter_sizes[self.level-1]
         self.levels_time = []
         
         self.text1 = self.random_letter()
@@ -137,11 +123,11 @@ Test'''
         self.end_time = time.time()
         self.each_level_time = self.end_time - self.start_time
         self.levels_time.append(self.each_level_time)
+        self.level += 1
         
-        if self.level < len(self.letter_sizes):
+        if self.level < len(self.letter_sizes)+1:
             self.failed_attempts = 3
-            current_size = self.letter_sizes[self.level]
-            self.level += 1
+            current_size = self.letter_sizes[self.level-1]
             self.text1 = self.random_letter()
             self.canvas.itemconfig(self.letter, font=("Arial", current_size), text=self.text1)
             self.start_time = time.time()
@@ -151,24 +137,24 @@ Test'''
             
     def display_report(self, width, height):
         self.clear_previous_widgets()
-        
-        if self.level > 0:
+        print(self.level)
+        if self.level > 1:
             self.report_content = f"""
             Eye Test Report:
             ---------------------
-            Best Level Achieved: Level {self.level}
-            Smallest Letter Size: {self.letter_sizes[self.level-1]} pixels
-            Estimated Visual Acuity: {self.vision_acuity[self.level-1]}
+            Best Level Achieved: Level {self.level-1}
+            Smallest Letter Size: {self.letter_sizes[self.level-2]} pixels
+            Estimated Visual Acuity: {self.vision_acuity[self.level-2]}
             Avg Time Taken per Level: {round(sum(self.levels_time)/len(self.levels_time), 2)} s
             ---------------------
             Recommendations:
-            {"Your vision seems normal." if self.level >= len(self.letter_sizes) - 1 else "Consider consulting an optometrist."}
+            {"Your vision seems normal." if self.level-1 >= len(self.letter_sizes) else "Consider consulting an optometrist."}
             """
         else:
             self.report_content = f"""
             Eye Test Report:
             ---------------------
-            Best Level Achieved: Level {self.level}
+            Best Level Achieved: Level {self.level-1}
             Smallest Letter Size: --
             Estimated Visual Acuity: --
             ---------------------

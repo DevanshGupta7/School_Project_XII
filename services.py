@@ -5,6 +5,7 @@ import threading
 
 import main_screen
 import service1
+import service2
 
 class Services:
     def __init__(self, root):
@@ -132,12 +133,12 @@ Test'''
         self.service1_image = tk.Button(self.inner_frame, image=self.snellen_chart, bd=0, command=lambda: self.load_screen_service1())
         self.service1_image.place(relx=0.75, y=350, anchor=tk.CENTER)
         
-        self.service2_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
+        self.service2_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0, command=lambda: self.load_screen_service2())
         self.service2_frame.bind("<Button-1>", self.on_press)
         self.service2_frame.bind("<ButtonRelease-1>", self.on_release)
         self.service2_frame.place(relx=0.50, y=1000, anchor=tk.CENTER)
         
-        self.service2_Button = tk.Button(self.inner_frame, text=self.service2_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
+        self.service2_Button = tk.Button(self.inner_frame, text=self.service2_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0, command=lambda: self.load_screen_service2())
         self.service2_Button.bind("<Button-1>", self.on_press)
         self.service2_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service2_Button.place(relx=0.25, y=1000, anchor=tk.CENTER)
@@ -146,7 +147,7 @@ Test'''
         ishira_image = ishira_image.resize((320, 320), Image.LANCZOS)
         self.ishira_image = ImageTk.PhotoImage(ishira_image)
         
-        self.service2_image = tk.Button(self.inner_frame, image=self.ishira_image, bd=0)
+        self.service2_image = tk.Button(self.inner_frame, image=self.ishira_image, bd=0, command=lambda: self.load_screen_service2())
         self.service2_image.place(relx=0.75, y=1000, anchor=tk.CENTER)
         
         self.service3_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
@@ -183,4 +184,11 @@ Test'''
                 widget.destroy()
             
         service1.Service1(self.root).service1_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_service2(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        service2.Service2(self.root).service2_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         

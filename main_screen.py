@@ -9,6 +9,7 @@ class Main:
     def __init__(self, root):
         self.root = root
         self.root.title("Eye Testing App")
+        self.root.attributes('-fullscreen', True)
         width = root.winfo_screenwidth()
         height = root.winfo_screenheight()
         
