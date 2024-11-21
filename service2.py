@@ -78,7 +78,18 @@ class Service2:
         #self.service1_frame = tk.Button(self.inner_frame, bg="#22215b", bd=0)
         #self.service1_frame.place(relx=0.50, y=350, anchor=tk.CENTER)
         
-        self.ishihara_plates_info = [["IshiharaPlates\\Circled Number69.png", 69], ["IshiharaPlates\\Circled Number32.png", 32]]
+        self.ishihara_plates_info = [["IshiharaPlates\\Circled Number2.png", 2],
+                                     ["IshiharaPlates\\Circled Number34.png", 34],
+                                     ["IshiharaPlates\\Circled Number53.png", 53],
+                                     ["IshiharaPlates\\Circled Number58.png", 58],
+                                     ["IshiharaPlates\\Circled Number64.png", 64],
+                                     ["IshiharaPlates\\Circled Number102.png", 102],
+                                     ["IshiharaPlates\\Circled Number346.png", 346],
+                                     ["IshiharaPlates\\Circled Number348.png", 348],
+                                     ["IshiharaPlates\\Circled Number455.png", 455],
+                                     ["IshiharaPlates\\Circled Number584.png", 584],
+                                     ["IshiharaPlates\\Circled Number765.png", 765],
+                                     ["IshiharaPlates\\Circled Number979.png", 979]]
         self.level = 1
         self.levels_time = []
         
@@ -110,6 +121,7 @@ class Service2:
         user_input = self.input_text.get().strip().upper()
         print(user_input)
         print(self.ishihara_plates_info[self.random_number][1])
+            
         if int(user_input) == self.ishihara_plates_info[self.random_number][1]:
             print("Successfull")
             self.input_text.delete(0, tk.END)
@@ -121,6 +133,8 @@ class Service2:
             if self.failed_attempts == 0:
                 self.status_label.config(text="Test Failed!")
                 self.root.after(2000, lambda: self.display_report(width, height))
+            else:
+                self.status_label.config(text="Try Again!")
                 
     def next_level(self, width, height):
         self.end_time = time.time()

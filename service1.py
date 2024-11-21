@@ -118,6 +118,8 @@ class Service1:
             if self.failed_attempts == 0:
                 self.status_label.config(text="Test Failed!")
                 self.root.after(2000, lambda: self.display_report(width, height))
+            else:
+                self.status_label.config(text="Try Again!")
                 
     def next_level(self, width, height):
         self.end_time = time.time()
