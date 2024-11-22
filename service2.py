@@ -89,11 +89,13 @@ class Service2:
                                      ["IshiharaPlates\\Circled Number455.png", 455],
                                      ["IshiharaPlates\\Circled Number584.png", 584],
                                      ["IshiharaPlates\\Circled Number765.png", 765],
-                                     ["IshiharaPlates\\Circled Number979.png", 979]]
+                                     ["IshiharaPlates\\Circled Number879.png", 879]]
         self.level = 1
         self.levels_time = []
+        self.levels_occured = []
         
         self.ishihara_plate_path = self.random_ishihara_plate()
+        self.levels_occured.append(self.ishihara_plate_path)
         self.ishihara_image = Image.open(self.ishihara_plate_path)
         self.ishihara_image = self.ishihara_image.resize((450, 450))
         self.ishihara_photo = ImageTk.PhotoImage(self.ishihara_image)
@@ -118,6 +120,7 @@ class Service2:
         return self.random_ishihara
     
     def check(self, width, height):
+        self.status_label.config(text="")
         user_input = self.input_text.get().strip().upper()
         print(user_input)
         print(self.ishihara_plates_info[self.random_number][1])
@@ -145,6 +148,13 @@ class Service2:
         if self.level < 6:
             self.failed_attempts = 3
             print(self.level)
+            
+            while True:
+                self.ishihara_plate_path = self.random_ishihara_plate()
+                if self.ishihara_plate_path not in self.levels_occured:
+                    self.levels_occured.append(self.ishihara_plate_path)
+                    break
+                
             self.ishihara_plate_path = self.random_ishihara_plate()
             self.ishihara_image = Image.open(self.ishihara_plate_path)
             self.ishihara_image = self.ishihara_image.resize((450, 450))

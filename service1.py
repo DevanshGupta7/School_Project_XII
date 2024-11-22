@@ -84,8 +84,10 @@ class Service1:
         self.level = 1
         self.current_size = self.letter_sizes[self.level-1]
         self.levels_time = []
+        self.levels_occured = []
         
         self.text1 = self.random_letter()
+        self.levels_occured.append(self.text1)
         self.letter = self.canvas.create_text(width/2, height/2-200, text=self.text1, font=("Arial", self.current_size), fill="black")
         
         self.input_text = tk.Entry(self.canvas)
@@ -106,6 +108,7 @@ class Service1:
         return random_letter
     
     def check(self, width, height):
+        self.status_label.config(text="")
         user_input = self.input_text.get().strip().upper()
         if user_input == self.text1:
             print("Successfull")
@@ -130,7 +133,13 @@ class Service1:
         if self.level < len(self.letter_sizes)+1:
             self.failed_attempts = 3
             current_size = self.letter_sizes[self.level-1]
-            self.text1 = self.random_letter()
+            
+            while True:
+                self.text1 = self.random_letter()
+                if self.text1 not in self.levels_occured:
+                    self.levels_occured.append(self.text1)
+                    break
+                
             self.canvas.itemconfig(self.letter, font=("Arial", current_size), text=self.text1)
             self.start_time = time.time()
         else:
