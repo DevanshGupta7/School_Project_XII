@@ -1,111 +1,59 @@
-#Working Snellen Eye Service
-
-
-
 import tkinter as tk
 import random
-import string
-import time
-import datetime
 
-def next_level():
-    global current_size, level, text1, failed_attempts
-    if level < len(letter_sizes):
-        failed_attempts = 3
-        current_size = letter_sizes[level]
+def generate_similar_colors(base_color, variation=10):
+    base_rgb = window.winfo_rgb(base_color)
+    base_rgb = [x // 256 for x in base_rgb]
+    new_rgb = [
+        max(0, min(255, base_rgb[i] + random.randint(-variation, variation)))
+        for i in range(3)
+    ]
+    return f'#{new_rgb[0]:02x}{new_rgb[1]:02x}{new_rgb[2]:02x}'
+
+def draw_test(level):
+    canvas.delete("all")
+    base_color = "#e0e0e0"
+    shape_color = generate_similar_colors(base_color, variation=max(5, 20 - level * 3))
+    canvas.config(bg=base_color)
+    x, y = random.randint(100, 400), random.randint(100, 400)
+    canvas.create_rectangle(x, y, x+50, y+50, fill=shape_color, outline=shape_color)
+    instruction.config(text="Identify the shape and its position!")
+
+def submit_response():
+    global level
+    response = user_input.get()
+    if response.lower() == "circle":
+        result_label.config(text="Correct! Good color sensitivity!", fg="green")
         level += 1
-        text1 = random_letter()
-        canvas.itemconfig(letter, font=("Arial", current_size), text=text1)
     else:
-        status_label.config(text="Test Completed!")
-        display_report()
+        result_label.config(text="Try again!", fg="red")
         
-def random_letter():
-    random_letter = random.choice(string.ascii_uppercase)
-    return random_letter
+def increase_difficulty(level):
+    variation = max(5, 20 - level * 3)  # Reduce variation as level increases
+    draw_test(variation)
 
-def display_report():
-    report_window = tk.Toplevel(root)
-    report_window.title("Eye Test Report")
-    
-    if level > 0:
-        report_content = f"""
-        Eye Test Report:
-        ---------------------
-        Best Level Achieved: Level {level}
-        Smallest Letter Size: {letter_sizes[level-1]} pixels
-        Estimated Visual Acuity: {vision_acuity[level-1]}
-        ---------------------
-        Recommendations:
-        {"Your vision seems normal." if level >= len(letter_sizes) - 1 else "Consider consulting an optometrist."}
-        """
-    else:
-        report_content = f"""
-        Eye Test Report:
-        ---------------------
-        Best Level Achieved: Level {level}
-        Smallest Letter Size: --
-        Estimated Visual Acuity: --
-        ---------------------
-        Recommendations:
-        {"Highly Consider consulting an optometrist."}
-        """
-        
-    print(level)
-    report_label = tk.Label(report_window, text=report_content, justify="left", font=("Arial", 12))
-    report_label.pack(padx=20, pady=20)
 
-    # Close Button
-    close_button = tk.Button(report_window, text="Close", command=report_window.destroy)
-    close_button.pack(pady=10)
+window = tk.Tk()
+window.title("Color Sensitivity Test")
+window.geometry("500x500")
 
-# Distance setup
-distance_from_screen = 3  # meters
-
-# Letter heights in pixels for a 96 PPI screen
-letter_sizes = [150, 120, 100, 75, 50, 30, 20, 10, 8, 7]  # Example pixel sizes for each level
-vision_acuity = ["20/200", "20/100", "20/80", "20/60", "20/40", "20/20", "20/15", "20/10", "20/8", "20/7"]  
-level = 0  # Start level
-current_size = letter_sizes[level]
-
-# Tkinter GUI setup
-root = tk.Tk()
-root.title("Eye Test")
-
-canvas = tk.Canvas(root, width=800, height=400)
+canvas = tk.Canvas(window, width=500, height=500, bg="white")
 canvas.pack()
+global level
+level = 1
+instruction = tk.Label(window, text="Press 'Start Test' to begin!", font=("Arial", 14))
+instruction.pack()
 
-text1 = random_letter()
-# Display the first letter
-letter = canvas.create_text(400, 200, text=text1, font=("Arial", current_size), fill="black")
+button = tk.Button(window, text="Start Test", command=lambda: draw_test(level))
+button.pack()
 
-input_text = tk.Entry(root, width=20)
-input_text.pack(pady=10)
+user_input = tk.Entry(window)
+user_input.pack()
 
-failed_attempts = 3
+submit_button = tk.Button(window, text="Submit", command=submit_response)
+submit_button.pack()
 
-def check():
-    global text1, failed_attempts
-    user_input = input_text.get().strip().upper()
-    if user_input == text1:
-        print("Successfull")
-        input_text.delete(0, tk.END)
-        next_level()
-        
-    else:
-        failed_attempts -= 1
-        input_text.delete(0, tk.END)
-        if failed_attempts == 0:
-            status_label.config(text="Test Failed!")
-            display_report()
-            
+result_label = tk.Label(window, text="", font=("Arial", 14))
+result_label.pack()
 
-# Next level button
-next_button = tk.Button(root, text="Next Level", command=check)
-next_button.pack()
-
-# Status label
-status_label = tk.Label(root, text="")
-status_label.pack()
-
-root.mainloop()
+window.mainloop()

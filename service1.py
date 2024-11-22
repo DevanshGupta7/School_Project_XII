@@ -79,29 +79,12 @@ class Service1:
         #self.service1_frame = tk.Button(self.inner_frame, bg="#22215b", bd=0)
         #self.service1_frame.place(relx=0.50, y=350, anchor=tk.CENTER)
         
-        self.letter_sizes = [150, 120, 100, 75, 50, 30, 20, 10, 8, 7]
-        self.vision_acuity = ["20/200", "20/100", "20/80", "20/60", "20/40", "20/20", "20/15", "20/10", "20/8", "20/7"]
-        self.level = 1
-        self.current_size = self.letter_sizes[self.level-1]
-        self.levels_time = []
-        self.levels_occured = []
+        self.instruction = self.canvas.create_text(width/2, height/2-200,
+                                                   text="Please maintain a distance of 3 meters from the screen to test your eyes.",
+                                                   font=("Helvetica", 25), fill="black")
         
-        self.text1 = self.random_letter()
-        self.levels_occured.append(self.text1)
-        self.letter = self.canvas.create_text(width/2, height/2-200, text=self.text1, font=("Arial", self.current_size), fill="black")
-        
-        self.input_text = tk.Entry(self.canvas)
-        self.input_text.place(relx=0.5, rely=0.55, anchor=tk.CENTER)
-        
-        self.failed_attempts = 3
-        
-        self.next_button = tk.Button(self.canvas, text="Next Level", command=lambda: self.check(width, height))
-        self.next_button.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
-        
-        self.status_label = tk.Label(self.canvas, text="")
-        self.status_label.place(relx=0.5, rely=0.70, anchor=tk.CENTER)
-        
-        self.start_time = time.time()
+        self.root.after(5000, lambda: self.start_eye_test(width, height))
+            
         
     def random_letter(self):
         random_letter = random.choice(string.ascii_uppercase)
@@ -210,6 +193,36 @@ class Service1:
         if hasattr(self, 'status_label') and self.status_label:
             self.status_label.destroy()
             self.status_label = None
+            
+    def start_eye_test(self, width, height):
+        if hasattr(self, 'instruction') and self.instruction:
+            self.canvas.delete(self.instruction)
+            self.instruction = None
+            
+            
+        self.letter_sizes = [150, 120, 100, 75, 50, 30, 20, 10, 8, 7]
+        self.vision_acuity = ["20/200", "20/100", "20/80", "20/60", "20/40", "20/20", "20/15", "20/10", "20/8", "20/7"]
+        self.level = 1
+        self.current_size = self.letter_sizes[self.level-1]
+        self.levels_time = []
+        self.levels_occured = []
+        
+        self.text1 = self.random_letter()
+        self.levels_occured.append(self.text1)
+        self.letter = self.canvas.create_text(width/2, height/2-200, text=self.text1, font=("Arial", self.current_size), fill="black")
+        
+        self.input_text = tk.Entry(self.canvas)
+        self.input_text.place(relx=0.5, rely=0.55, anchor=tk.CENTER)
+        
+        self.failed_attempts = 3
+        
+        self.next_button = tk.Button(self.canvas, text="Next Level", command=lambda: self.check(width, height))
+        self.next_button.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
+        
+        self.status_label = tk.Label(self.canvas, text="")
+        self.status_label.place(relx=0.5, rely=0.70, anchor=tk.CENTER)
+        
+        self.start_time = time.time()
             
     def load_screen_main(self):
         for widget in self.root.winfo_children():
