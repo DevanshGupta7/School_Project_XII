@@ -48,12 +48,12 @@ class Main:
         self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        bg_image = Image.open("Images\\background.jpg")
+        bg_image = Image.open("assets\\Images\\background.jpg")
         bg_image = bg_image.resize((width, height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_image_id = self.canvas.create_image(0, 0, image=self.bg_photo, anchor=tk.NW)
         
-        self.image = Image.open("Images\\speaker_icon1.png")
+        self.image = Image.open("assets\\Images\\speaker_icon1.png")
         self.res_image = self.image.resize((30, 30), Image.LANCZOS)
         self.photo = ImageTk.PhotoImage(self.res_image)
         

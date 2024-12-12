@@ -32,7 +32,7 @@ class Service1:
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
-        header_image = Image.open("Images\\background-gradient-lights.jpg")
+        header_image = Image.open("assets\\Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
@@ -60,7 +60,7 @@ class Service1:
         self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        bg_image = Image.open("Images\\background_footer.jpg")
+        bg_image = Image.open("assets\\Images\\background_footer.jpg")
         bg_image = bg_image.resize((width, height-header_image_height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_image_id = self.canvas.create_image(0, 0, image=self.bg_photo, anchor=tk.NW)

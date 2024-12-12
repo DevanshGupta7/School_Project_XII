@@ -61,7 +61,7 @@ Test'''
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
-        header_image = Image.open("Images\\background-gradient-lights.jpg")
+        header_image = Image.open("assets\\Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
@@ -106,7 +106,7 @@ Test'''
         
         self.inner_frame = tk.Frame(self.canvas)
         
-        bg_image = Image.open("Images\\background_footer.jpg")
+        bg_image = Image.open("assets\\Images\\background_footer.jpg")
         bg_image = bg_image.resize((width, height-header_image_height+700), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_photo_label = tk.Label(self.inner_frame, image=self.bg_photo, bd=0, highlightthickness=0)
@@ -122,7 +122,7 @@ Test'''
         self.service1_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service1_Button.place(relx=0.25, y=350, anchor=tk.CENTER)
         
-        snellen_chart = Image.open("Images\\snellen_chart.jpg")
+        snellen_chart = Image.open("assets\\Images\\snellen_chart.jpg")
         snellen_chart = snellen_chart.resize((200, 350), Image.LANCZOS)
         self.snellen_chart = ImageTk.PhotoImage(snellen_chart)
         
@@ -139,7 +139,7 @@ Test'''
         self.service2_Button.bind("<ButtonRelease-1>", self.on_release)
         self.service2_Button.place(relx=0.25, y=1000, anchor=tk.CENTER)
         
-        ishira_image = Image.open("Images\\ishihara_image.png")
+        ishira_image = Image.open("assets\\Images\\ishihara_image.png")
         ishira_image = ishira_image.resize((320, 320), Image.LANCZOS)
         self.ishira_image = ImageTk.PhotoImage(ishira_image)
         
