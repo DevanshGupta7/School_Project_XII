@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 import threading
 import random
 import time
+import sys
+import os
 
 import main_screen
 import services
@@ -31,7 +33,8 @@ class Service2:
         self.header = tk.Frame(self.root, width=width, height=150)
         self.header.place(relx=0, rely=0)
         
-        header_image = Image.open("assets\\Images\\background-gradient-lights.jpg")
+        header_image = Service2.resource_path("assets/Images/background-gradient-lights.jpg")
+        header_image = Image.open(header_image)
         header_width, header_image_height = header_image.size
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
@@ -59,30 +62,33 @@ class Service2:
         self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        bg_image = Image.open("assets\\Images\\background_footer.jpg")
+        bg_image = Service2.resource_path("assets/Images/background_footer.jpg")
+        bg_image = Image.open(bg_image)
         bg_image = bg_image.resize((width, height-header_image_height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_image_id = self.canvas.create_image(0, 0, image=self.bg_photo, anchor=tk.NW)
         
-        self.ishihara_plates_info = [["assets\\IshiharaPlates\\Circled Number2.png", 2],
-                                     ["assets\\IshiharaPlates\\Circled Number34.png", 34],
-                                     ["assets\\IshiharaPlates\\Circled Number53.png", 53],
-                                     ["assets\\IshiharaPlates\\Circled Number58.png", 58],
-                                     ["assets\\IshiharaPlates\\Circled Number64.png", 64],
-                                     ["assets\\IshiharaPlates\\Circled Number102.png", 102],
-                                     ["assets\\IshiharaPlates\\Circled Number346.png", 346],
-                                     ["assets\\IshiharaPlates\\Circled Number348.png", 348],
-                                     ["assets\\IshiharaPlates\\Circled Number455.png", 455],
-                                     ["assets\\IshiharaPlates\\Circled Number584.png", 584],
-                                     ["assets\\IshiharaPlates\\Circled Number765.png", 765],
-                                     ["assets\\IshiharaPlates\\Circled Number879.png", 879]]
+        self.ishihara_plates_info = [["assets/IshiharaPlates/Circled Number2.png", 2],
+                                     ["assets/IshiharaPlates/Circled Number34.png", 34],
+                                     ["assets/IshiharaPlates/Circled Number53.png", 53],
+                                     ["assets/IshiharaPlates/Circled Number58.png", 58],
+                                     ["assets/IshiharaPlates/Circled Number64.png", 64],
+                                     ["assets/IshiharaPlates/Circled Number102.png", 102],
+                                     ["assets/IshiharaPlates/Circled Number346.png", 346],
+                                     ["assets/IshiharaPlates/Circled Number348.png", 348],
+                                     ["assets/IshiharaPlates/Circled Number455.png", 455],
+                                     ["assets/IshiharaPlates/Circled Number584.png", 584],
+                                     ["assets/IshiharaPlates/Circled Number765.png", 765],
+                                     ["assets/IshiharaPlates/Circled Number879.png", 879]]
         self.level = 1
         self.levels_time = []
         self.levels_occured = []
         
         self.ishihara_plate_path = self.random_ishihara_plate()
         self.levels_occured.append(self.ishihara_plate_path)
-        self.ishihara_image = Image.open(self.ishihara_plate_path)
+        
+        self.ishihara_image = Service2.resource_path(self.ishihara_plate_path)
+        self.ishihara_image = Image.open(self.ishihara_image)
         self.ishihara_image = self.ishihara_image.resize((450, 450))
         self.ishihara_photo = ImageTk.PhotoImage(self.ishihara_image)
         self.ishihara_plate = self.canvas.create_image(width/2, height/2-180, image=self.ishihara_photo, anchor=tk.CENTER)
@@ -137,7 +143,8 @@ class Service2:
                     break
                 
             self.ishihara_plate_path = self.random_ishihara_plate()
-            self.ishihara_image = Image.open(self.ishihara_plate_path)
+            self.ishihara_image = Service2.resource_path(self.ishihara_plate_path)
+            self.ishihara_image = Image.open(self.ishihara_image)
             self.ishihara_image = self.ishihara_image.resize((450, 450))
             self.ishihara_photo = ImageTk.PhotoImage(self.ishihara_image)
             self.ishihara_plate = self.canvas.create_image(width/2, height/2-180, image=self.ishihara_photo, anchor=tk.CENTER)
@@ -205,3 +212,11 @@ class Service2:
                 widget.destroy()
             
         services.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    @staticmethod
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)

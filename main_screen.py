@@ -2,6 +2,8 @@ import pyttsx3
 import tkinter as tk
 from PIL import Image, ImageTk
 import threading
+import sys
+import os
 
 import about_screen
 import faqs_screen
@@ -50,12 +52,15 @@ class Main:
         self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        bg_image = Image.open("assets\\Images\\background.jpg")
+        # Use the static method to get the resource path
+        bg_image_path = Main.resource_path("assets/Images/background.jpg")
+        bg_image = Image.open(bg_image_path)
         bg_image = bg_image.resize((width, height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_image_id = self.canvas.create_image(0, 0, image=self.bg_photo, anchor=tk.NW)
         
-        self.image = Image.open("assets\\Images\\speaker_icon1.png")
+        self.image = Main.resource_path("assets/Images/speaker_icon1.png")
+        self.image = Image.open(self.image)
         self.res_image = self.image.resize((30, 30), Image.LANCZOS)
         self.photo = ImageTk.PhotoImage(self.res_image)
         
@@ -110,6 +115,14 @@ class Main:
                 widget.destroy()
             
         faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    @staticmethod
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
 
 if __name__ == "__main__":
     root = tk.Tk()
