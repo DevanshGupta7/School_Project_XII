@@ -40,7 +40,6 @@ No, this app works offline once installed. However, you may need an internet con
         self.rate = self.engine.getProperty("rate")
         self.engine.setProperty("voice", self.voices[0].id)
         self.engine.setProperty("rate", 150)
-
         
     def speak(self, audio):
         self.engine.say(audio)
@@ -64,7 +63,6 @@ No, this app works offline once installed. However, you may need an internet con
         
         header_image = Image.open("Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
-        print(header_image_height)
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
         self.header_photo_label = tk.Label(self.header, image=self.header_photo)
@@ -95,12 +93,7 @@ No, this app works offline once installed. However, you may need an internet con
         
         self.main_frame = tk.Frame(self.root)
         self.main_frame.place(x=0, y=header_image_height, width=width, height=height-header_image_height)
-        
-        # self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
-        # self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        
-        # self.inner_frame = tk.Frame(self.canvas)
-        
+
         bg_image = Image.open("Images\\background_footer.jpg")
         bg_image = bg_image.resize((width, height-header_image_height), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
@@ -108,58 +101,11 @@ No, this app works offline once installed. However, you may need an internet con
         self.bg_photo_label.pack()
         
         tk.Label(self.main_frame, text="FAQs", font=("Arial", 25, "bold"), bg="#8a2f61").place(x=width/2, y=60, anchor=tk.CENTER)
-        
-        #self.about_label = self.canvas.create_text(height/2, width/2, text="About This App", font=("Helvetica", 35), fill="Black")
-        
-        
-        
+
         self.text_widget = tk.Text(self.main_frame, wrap=tk.WORD, font=("Arial", 15), bg="#8a2f61")
         self.text_widget.insert(tk.END, self.about_text)
         self.text_widget.config(state="disabled")
         self.text_widget.place(x=width/2, y=height/2-50, anchor=tk.CENTER)
-        
-        #tk.Label(self.main_frame, text=self.about_text, font=("Arial", 16, "bold"), bg="#8a2f61").place(x=0, y=0)
-        
-        # snellen_chart = Image.open("Images\\snellen_chart.jpg")
-        # snellen_chart = snellen_chart.resize((200, 350), Image.LANCZOS)
-        # self.snellen_chart = ImageTk.PhotoImage(snellen_chart)
-        
-        # self.service1_image = tk.Button(self.inner_frame, image=self.snellen_chart, bd=0, command=lambda: self.load_screen_service1())
-        # self.service1_image.place(relx=0.75, y=350, anchor=tk.CENTER)
-        
-        # self.service2_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0, command=lambda: self.load_screen_service2())
-        # self.service2_frame.bind("<Button-1>", self.on_press)
-        # self.service2_frame.bind("<ButtonRelease-1>", self.on_release)
-        # self.service2_frame.place(relx=0.50, y=1000, anchor=tk.CENTER)
-        
-        # self.service2_Button = tk.Button(self.inner_frame, text=self.service2_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0, command=lambda: self.load_screen_service2())
-        # self.service2_Button.bind("<Button-1>", self.on_press)
-        # self.service2_Button.bind("<ButtonRelease-1>", self.on_release)
-        # self.service2_Button.place(relx=0.25, y=1000, anchor=tk.CENTER)
-        
-        # ishira_image = Image.open("Images\\ishihara_image.png")
-        # ishira_image = ishira_image.resize((320, 320), Image.LANCZOS)
-        # self.ishira_image = ImageTk.PhotoImage(ishira_image)
-        
-        # self.service2_image = tk.Button(self.inner_frame, image=self.ishira_image, bd=0, command=lambda: self.load_screen_service2())
-        # self.service2_image.place(relx=0.75, y=1000, anchor=tk.CENTER)
-        
-        # self.service3_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
-        # self.service3_frame.bind("<Button-1>", self.on_press)
-        # self.service3_frame.bind("<ButtonRelease-1>", self.on_release)
-        # self.service3_frame.place(relx=0.50, y=1650, anchor=tk.CENTER)
-        
-        # self.service3_Button = tk.Button(self.inner_frame, text=self.service3_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
-        # self.service3_Button.bind("<Button-1>", self.on_press)
-        # self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
-        # self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
-        
-        # color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
-        # color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
-        # self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
-        
-        # self.service3_image = tk.Button(self.inner_frame, image=self.color_blindness_image, bd=0, highlightthickness=0)
-        # self.service3_image.place(relx=0.75, y=1650, anchor=tk.CENTER)
         
     def load_screen_main(self):
         for widget in self.root.winfo_children():
@@ -181,4 +127,3 @@ No, this app works offline once installed. However, you may need an internet con
                     widget.destroy()
                 
             about_screen.About(self.root).about_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
-        

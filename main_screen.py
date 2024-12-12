@@ -41,9 +41,7 @@ class Main:
         self.about.config(activebackground="#8a2f61", activeforeground="black")
         self.faq.config(activebackground="#8a2f61", activeforeground="black")
         
-    def main_screen_logic(self, width, height):
-        'self.root.configure(bg="#8a2f61")'
-        
+    def main_screen_logic(self, width, height):        
         self.main_frame = tk.Frame(self.root)
         self.main_frame.place(x=0, y=0, width=width, height=height)
         
@@ -87,7 +85,6 @@ class Main:
         
         self.tips_text = self.canvas.create_text(width/2, height/2-95, text=self.tipsText, font=("Helvetica", 20), fill="white")
         
-        
         self.speak_button = tk.Button(self.canvas, image=self.photo, command=lambda: self.speak(f"Healthy Vision Tips... {self.tipsText}"))
         self.speak_button.place(relx=0.50, rely=0.55, anchor=tk.CENTER)
         
@@ -111,7 +108,6 @@ class Main:
                 widget.destroy()
             
         faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
-        
 
 if __name__ == "__main__":
     root = tk.Tk()

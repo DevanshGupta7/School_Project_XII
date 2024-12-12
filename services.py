@@ -1,7 +1,6 @@
 import pyttsx3
 import tkinter as tk
 from PIL import Image, ImageTk
-import threading
 
 import main_screen
 import service1
@@ -64,7 +63,6 @@ Test'''
         
         header_image = Image.open("Images\\background-gradient-lights.jpg")
         header_width, header_image_height = header_image.size
-        print(header_image_height)
         header_image = header_image.resize((width, header_image_height), Image.LANCZOS)
         self.header_photo = ImageTk.PhotoImage(header_image)
         self.header_photo_label = tk.Label(self.header, image=self.header_photo)
@@ -148,23 +146,6 @@ Test'''
         self.service2_image = tk.Button(self.inner_frame, image=self.ishira_image, bd=0, command=lambda: self.load_screen_service2())
         self.service2_image.place(relx=0.75, y=1000, anchor=tk.CENTER)
         
-        # self.service3_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
-        # self.service3_frame.bind("<Button-1>", self.on_press)
-        # self.service3_frame.bind("<ButtonRelease-1>", self.on_release)
-        # self.service3_frame.place(relx=0.50, y=1650, anchor=tk.CENTER)
-        
-        # self.service3_Button = tk.Button(self.inner_frame, text=self.service3_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
-        # self.service3_Button.bind("<Button-1>", self.on_press)
-        # self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
-        # self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
-        
-        # color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
-        # color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
-        # self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
-        
-        # self.service3_image = tk.Button(self.inner_frame, image=self.color_blindness_image, bd=0, highlightthickness=0)
-        # self.service3_image.place(relx=0.75, y=1650, anchor=tk.CENTER)
-        
         self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
         self.inner_frame.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
@@ -203,4 +184,3 @@ Test'''
                 widget.destroy()
             
         faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
-        
