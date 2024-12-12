@@ -3,6 +3,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import threading
 
+import about_screen
+import faqs_screen
 import services
 
 class Main:
@@ -57,19 +59,20 @@ class Main:
         self.res_image = self.image.resize((30, 30), Image.LANCZOS)
         self.photo = ImageTk.PhotoImage(self.res_image)
         
-        self.letter = self.canvas.create_text(220, 70, text="Eye Testing", font=("Helvetica", 35), fill="#FFFF00")
+        self.main_heading = tk.Label(self.main_frame, text="Eye Testing", font=("Helvetica", 35, "italic"),bg="#8a2f61", fg="#FFFF00")
+        self.main_heading.place(x=220, y=70, anchor=tk.CENTER)
         
         self.services = tk.Button(self.canvas, text="Services", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_services())
         self.services.bind("<Button-1>", self.on_press_main)
         self.services.bind("<ButtonRelease-1>", self.on_release_main)
         self.services.place(relx=0.37, rely=0.08, anchor=tk.CENTER)
         
-        self.about = tk.Button(self.canvas, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.about = tk.Button(self.canvas, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_about())
         self.about.bind("<Button-1>", self.on_press_main)
         self.about.bind("<ButtonRelease-1>", self.on_release_main)
         self.about.place(relx=0.50, rely=0.08, anchor=tk.CENTER)
         
-        self.faq = tk.Button(self.canvas, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.faq = tk.Button(self.canvas, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_faqs())
         self.faq.bind("<Button-1>", self.on_press_main)
         self.faq.bind("<ButtonRelease-1>", self.on_release_main)
         self.faq.place(relx=0.63, rely=0.08, anchor=tk.CENTER)
@@ -94,6 +97,20 @@ class Main:
                 widget.destroy()
             
         services.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_about(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        about_screen.About(self.root).about_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_faqs(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         
 
 if __name__ == "__main__":

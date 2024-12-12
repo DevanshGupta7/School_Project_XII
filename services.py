@@ -6,6 +6,8 @@ import threading
 import main_screen
 import service1
 import service2
+import about_screen
+import faqs_screen
 
 class Services:
     def __init__(self, root):
@@ -43,10 +45,8 @@ Test'''
         self.home_button.config(activebackground="#FFFFFE", activeforeground="#8a2f61")
         self.service1_frame.config(activebackground="#22215b", activeforeground="white")
         self.service2_frame.config(activebackground="#22215b", activeforeground="white")
-        self.service3_frame.config(activebackground="#22215b", activeforeground="white")
         self.service1_Button.config(activebackground="#22215b", activeforeground="white")
         self.service2_Button.config(activebackground="#22215b", activeforeground="white")
-        self.service3_Button.config(activebackground="#22215b", activeforeground="white")
 
     def on_release(self, event):
         self.services_button.config(activebackground="#8a2f61", activeforeground="black")
@@ -55,10 +55,8 @@ Test'''
         self.home_button.config(activebackground="#8a2f61", activeforeground="black")
         self.service1_frame.config(activebackground="#22215b", activeforeground="white")
         self.service2_frame.config(activebackground="#22215b", activeforeground="white")
-        self.service3_frame.config(activebackground="#22215b", activeforeground="white")
         self.service1_Button.config(activebackground="#22215b", activeforeground="white")
         self.service2_Button.config(activebackground="#22215b", activeforeground="white")
-        self.service3_Button.config(activebackground="#22215b", activeforeground="white")
         
     def services_screen(self, width, height):        
         self.header = tk.Frame(self.root, width=width, height=150)
@@ -80,12 +78,12 @@ Test'''
         self.services_button.bind("<ButtonRelease-1>", self.on_release)
         self.services_button.place(relx=0.37, rely=0.50, anchor=tk.CENTER)
         
-        self.about_button = tk.Button(self.header, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.about_button = tk.Button(self.header, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_about())
         self.about_button.bind("<Button-1>", self.on_press)
         self.about_button.bind("<ButtonRelease-1>", self.on_release)
         self.about_button.place(relx=0.505, rely=0.50, anchor=tk.CENTER)
         
-        self.faq_button = tk.Button(self.header, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.faq_button = tk.Button(self.header, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_faqs())
         self.faq_button.bind("<Button-1>", self.on_press)
         self.faq_button.bind("<ButtonRelease-1>", self.on_release)
         self.faq_button.place(relx=0.63, rely=0.50, anchor=tk.CENTER)
@@ -111,7 +109,7 @@ Test'''
         self.inner_frame = tk.Frame(self.canvas)
         
         bg_image = Image.open("Images\\background_footer.jpg")
-        bg_image = bg_image.resize((width, height-header_image_height+1650), Image.LANCZOS)
+        bg_image = bg_image.resize((width, height-header_image_height+700), Image.LANCZOS)
         self.bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_photo_label = tk.Label(self.inner_frame, image=self.bg_photo, bd=0, highlightthickness=0)
         self.bg_photo_label.pack()
@@ -150,22 +148,22 @@ Test'''
         self.service2_image = tk.Button(self.inner_frame, image=self.ishira_image, bd=0, command=lambda: self.load_screen_service2())
         self.service2_image.place(relx=0.75, y=1000, anchor=tk.CENTER)
         
-        self.service3_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
-        self.service3_frame.bind("<Button-1>", self.on_press)
-        self.service3_frame.bind("<ButtonRelease-1>", self.on_release)
-        self.service3_frame.place(relx=0.50, y=1650, anchor=tk.CENTER)
+        # self.service3_frame = tk.Button(self.inner_frame, width=200, height=28, bg="#22215b", bd=0)
+        # self.service3_frame.bind("<Button-1>", self.on_press)
+        # self.service3_frame.bind("<ButtonRelease-1>", self.on_release)
+        # self.service3_frame.place(relx=0.50, y=1650, anchor=tk.CENTER)
         
-        self.service3_Button = tk.Button(self.inner_frame, text=self.service3_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
-        self.service3_Button.bind("<Button-1>", self.on_press)
-        self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
-        self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
+        # self.service3_Button = tk.Button(self.inner_frame, text=self.service3_text, font=("Helvetica", 50, "italic"), bg="#22215b", fg="white", bd=0)
+        # self.service3_Button.bind("<Button-1>", self.on_press)
+        # self.service3_Button.bind("<ButtonRelease-1>", self.on_release)
+        # self.service3_Button.place(relx=0.25, y=1650, anchor=tk.CENTER)
         
-        color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
-        color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
-        self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
+        # color_blindness_image = Image.open("Images\\color_blindness_image.jpg")
+        # color_blindness_image = color_blindness_image.resize((320, 320), Image.LANCZOS)
+        # self.color_blindness_image = ImageTk.PhotoImage(color_blindness_image)
         
-        self.service3_image = tk.Button(self.inner_frame, image=self.color_blindness_image, bd=0, highlightthickness=0)
-        self.service3_image.place(relx=0.75, y=1650, anchor=tk.CENTER)
+        # self.service3_image = tk.Button(self.inner_frame, image=self.color_blindness_image, bd=0, highlightthickness=0)
+        # self.service3_image.place(relx=0.75, y=1650, anchor=tk.CENTER)
         
         self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
         self.inner_frame.update_idletasks()
@@ -191,4 +189,18 @@ Test'''
                 widget.destroy()
             
         service2.Service2(self.root).service2_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_about(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        about_screen.About(self.root).about_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_faqs(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         
