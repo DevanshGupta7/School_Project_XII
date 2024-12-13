@@ -52,7 +52,6 @@ class Main:
         self.canvas = tk.Canvas(self.main_frame, highlightthickness=0, bd=0)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Use the static method to get the resource path
         bg_image_path = Main.resource_path("assets/Images/background.jpg")
         bg_image = Image.open(bg_image_path)
         bg_image = bg_image.resize((width, height), Image.LANCZOS)
