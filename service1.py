@@ -10,6 +10,8 @@ import os
 
 import main_screen
 import services
+import about_screen
+import faqs_screen
 
 class Service1:
     def __init__(self, root):
@@ -48,10 +50,10 @@ class Service1:
         self.services_button = tk.Button(self.header, text="Services", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_services())
         self.services_button.place(relx=0.37, rely=0.50, anchor=tk.CENTER)
         
-        self.about_button = tk.Button(self.header, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.about_button = tk.Button(self.header, text="About Us", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_about())
         self.about_button.place(relx=0.505, rely=0.50, anchor=tk.CENTER)
         
-        self.faq_button = tk.Button(self.header, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0)
+        self.faq_button = tk.Button(self.header, text="FAQs", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_faqs())
         self.faq_button.place(relx=0.63, rely=0.50, anchor=tk.CENTER)
         
         self.home_button = tk.Button(self.header, text="Home", font=("Helvetica", 20, "bold", "italic"), bg="#8a2f61", fg="#FFFFFE", bd=0, command=lambda: self.load_screen_main())
@@ -207,6 +209,20 @@ class Service1:
                 widget.destroy()
             
         services.Services(self.root).services_screen(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_about(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        about_screen.About(self.root).about_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
+        
+    def load_screen_faqs(self):
+        for widget in self.root.winfo_children():
+            if widget.winfo_exists():
+                widget.destroy()
+            
+        faqs_screen.Faqs(self.root).faqs_screen_logic(self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         
     @staticmethod
     def resource_path(relative_path):

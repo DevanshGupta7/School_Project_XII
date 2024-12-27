@@ -8,8 +8,6 @@ import os
 import about_screen
 import faqs_screen
 import services
-import service1
-import service2
 
 class Main:
     def __init__(self, root):
